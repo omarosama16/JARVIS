@@ -1,100 +1,169 @@
 from voice import speak, listen, wait_for_wake_word
-import commands
 
+from core.router import route_command
+from utils.query import extract_search_query
+
+from commands import apps, files, web, system
+
+
+# ==========================================
+# COMMAND HANDLER
+# ==========================================
 
 def handle_command(command):
 
     print(f"\n[COMMAND RECEIVED] {command}")
 
-    if not command:
+    intent = route_command(command)
+
+    print(f"[INTENT DETECTED] {intent}")
+
+    # ==========================================
+    # EMPTY
+    # ==========================================
+
+    if intent == "empty":
         speak("I didn't hear a command, sir.")
         return True
 
+    # ==========================================
     # EXIT
-    if any(word in command for word in [
-        "exit",
-        "goodbye",
-        "shutdown",
-        "quit"
-    ]):
+    # ==========================================
+
+    if intent == "exit":
         speak("Goodbye, sir.")
         return False
 
-    # GREETINGS
-    if "hello" in command or "hi" in command:
+    # ==========================================
+    # GREETING
+    # ==========================================
+
+    if intent == "greeting":
         speak("Hello, sir.")
 
-    # HOW ARE YOU
-    elif "how are you" in command:
+    # ==========================================
+    # STATUS
+    # ==========================================
+
+    elif intent == "status":
         speak("I'm functioning perfectly, sir.")
 
+    # ==========================================
     # TIME
-    elif "what time" in command or "current time" in command:
-        commands.tell_time()
+    # ==========================================
 
+    elif intent == "time":
+        system.tell_time()
+
+    # ==========================================
     # DATE
-    elif (
-        "what date" in command
-        or "today's date" in command
-        or "what day is it" in command
-    ):
-        commands.tell_date()
+    # ==========================================
 
+    elif intent == "date":
+        system.tell_date()
+
+    # ==========================================
+    # CPU
+    # ==========================================
+
+    elif intent == "cpu":
+        system.tell_cpu_usage()
+
+    # ==========================================
+    # RAM
+    # ==========================================
+
+    elif intent == "ram":
+        system.tell_ram_usage()
+
+    # ==========================================
+    # BATTERY
+    # ==========================================
+
+    elif intent == "battery":
+        system.tell_battery()
+
+    # ==========================================
+    # SYSTEM INFORMATION
+    # ==========================================
+
+    elif intent == "system_info":
+        system.tell_system_info()
+
+    # ==========================================
     # FIREFOX
-    elif (
-        "open firefox" in command
-        or "launch firefox" in command
-    ):
-        commands.open_firefox()
+    # ==========================================
 
+    elif intent == "firefox":
+        apps.open_firefox()
+
+    # ==========================================
     # VS CODE
-    elif (
-        "open vscode" in command
-        or "open vs code" in command
-        or "open visual studio code" in command
-    ):
-        commands.open_vscode()
+    # ==========================================
 
+    elif intent == "vscode":
+        apps.open_vscode()
+
+    # ==========================================
     # SPOTIFY
-    elif "open spotify" in command:
-        commands.open_spotify()
+    # ==========================================
 
+    elif intent == "spotify":
+        apps.open_spotify()
+
+    # ==========================================
     # DOWNLOADS
-    elif "open downloads" in command:
-        commands.open_downloads()
+    # ==========================================
 
+    elif intent == "downloads":
+        files.open_downloads()
+
+    # ==========================================
     # DESKTOP
-    elif "open desktop" in command:
-        commands.open_desktop()
+    # ==========================================
 
+    elif intent == "desktop":
+        files.open_desktop()
+
+    # ==========================================
     # FILE EXPLORER
-    elif (
-        "open file explorer" in command
-        or "open explorer" in command
-    ):
-        commands.open_file_explorer()
+    # ==========================================
 
-    # GOOGLE
-    elif "search google for" in command:
+    elif intent == "file_explorer":
+        files.open_file_explorer()
 
-        query = command.split("search google for", 1)[1].strip()
+    # ==========================================
+    # GOOGLE SEARCH
+    # ==========================================
+
+    elif intent == "google_search":
+
+        query = extract_search_query(command, "google")
 
         if query:
-            commands.google_search(query)
+            web.google_search(query)
+
         else:
             speak("What should I search for, sir?")
 
-    # YOUTUBE
-    elif "search youtube for" in command:
+    # ==========================================
+    # YOUTUBE SEARCH
+    # ==========================================
 
-        query = command.split("search youtube for", 1)[1].strip()
+    elif intent == "youtube_search":
+
+        query = extract_search_query(command, "youtube")
 
         if query:
-            commands.youtube_search(query)
+            web.youtube_search(query)
+
         else:
             speak("What should I search for, sir?")
 
+    # ==========================================
     # UNKNOWN
+    # ==========================================
+
     else:
         speak(
             f"I heard {command}, but I don't know that command yet, sir."
@@ -104,10 +173,11 @@ def handle_command(command):
 
 
 # ==========================================
-# START
+# START JARVIS
 # ==========================================
 
 speak("JARVIS online and ready.")
+
 
 while True:
 
