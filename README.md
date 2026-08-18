@@ -446,8 +446,6 @@ No personal information is intentionally collected, sold, or shared by this proj
 ## License
 
 This project is developed for educational and personal use.
-
-You are free to explore, modify, and build upon the project.
 ---
 
 ## Author
