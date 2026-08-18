@@ -110,34 +110,35 @@ The project separates command detection from command execution, making the syste
 
 ## Project Structure
 
+```text
 PROJECT JARVIS/
-|
-+-- commands/
-|   +-- __init__.py
-|   +-- apps.py
-|   +-- files.py
-|   +-- system.py
-|   +-- web.py
-|
-+-- core/
-|   +-- __init__.py
-|   +-- router.py
-|
-+-- utils/
-|   +-- __init__.py
-|   +-- query.py
-|
-+-- main.py
-+-- voice.py
-|
-+-- test_router.py
-+-- test_query.py
-+-- test_commands.py
-|
-+-- requirements.txt
-+-- README.md
-+-- .gitignore
-
+│
+├── commands/
+│   ├── __init__.py
+│   ├── apps.py
+│   ├── files.py
+│   ├── system.py
+│   └── web.py
+│
+├── core/
+│   ├── __init__.py
+│   └── router.py
+│
+├── utils/
+│   ├── __init__.py
+│   └── query.py
+│
+├── main.py
+├── voice.py
+│
+├── test_router.py
+├── test_query.py
+├── test_commands.py
+│
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
 ---
 
 ## How It Works
