@@ -5,7 +5,7 @@
 JARVIS is a Python-based desktop voice assistant designed to interact with a Windows computer through natural voice commands.
 
 Version 1.1 focuses on modular command architecture, reliable command routing, web search capabilities, and real-time system intelligence.
-
+ 
 ---
 
 ## Features
