@@ -10,7 +10,7 @@ Version 1.1 focuses on modular command architecture, reliable command routing, w
 
 ## Features
 
-### Voice Interaction
+### Voice Interaction  
 
 - Wake-word detection
 - Speech recognition
